@@ -1,30 +1,21 @@
-from langchain_huggingface import HuggingFaceChat
+from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
 import streamlit as st
-import os
-
-# Load .env variables
 load_dotenv()
-
-# Get your HF API key from environment
-api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-
-# Initialize DeepSeek as a Chat model
-llm = HuggingFaceChat(
+api_key = "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
+" 
+llm=HuggingFaceEndpoint(
     repo_id="deepseek-ai/DeepSeek-V3.1",
-    huggingfacehub_api_token=api_key,
-    model_kwargs={
-        "temperature": 0.7,
-        "max_new_tokens": 512
-    }
-)
+    task="text-generation",
+    huggingfacehub_api_token=api_key 
+    )
+model=ChatHuggingFace(llm=llm)
+st.header("research tool")
+user_input=st.text_input("enter your prompt here")
+if st.button('summarize'):
+    result=model.invoke(user_input)
+    st.write(result.content)
 
-st.header("Research Tool")
-user_input = st.text_input("Enter your prompt here")
-
-if st.button("Summarize"):
-    result = llm.invoke(user_input)
-    st.write(result)
 
 
 
