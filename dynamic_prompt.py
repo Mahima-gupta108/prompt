@@ -1,7 +1,11 @@
 from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 import streamlit as st
+from dotenv import load_dotenv
+import os
 from langchain_core.prompts import PromptTemplate
-api_key="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" 
+load_dotenv() 
+
+api_key = os.getenv("HUGGINGFACEHUB_API_TOKEN") 
 llm = HuggingFaceEndpoint(
     repo_id="deepseek-ai/DeepSeek-V3.1",
     task="text-generation",
